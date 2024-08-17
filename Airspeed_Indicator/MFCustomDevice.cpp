@@ -22,7 +22,7 @@ extern MFEEPROM MFeeprom;
     E.g. 6 pins are required, each pin could have two characters (two digits),
     each pins are delimited by "|" and the string is NULL terminated.
     -> (6 * 2) + 5 + 1 = 18 bytes is the maximum.
-    The custom type is "MyCustomClass", which means 14 characters plus NULL = 15
+    The custom type is "Airspeed_Indicator", which means 14 characters plus NULL = 15
     The configuration is "myConfig", which means 8 characters plus NULL = 9
     The maximum characters to be expected is 18, so MEMLEN_STRING_BUFFER has to be at least 18
 ********************************************************************************** */
@@ -85,16 +85,14 @@ void MFCustomDevice::attach(uint16_t adrPin, uint16_t adrType, uint16_t adrConfi
         is used to store the type
     ********************************************************************************** */
     getStringFromMem(adrType, parameter, configFromFlash);
-    if (strcmp(parameter, "MOBIFLIGHT_TEMPLATE") == 0)
-        _customType = MY_CUSTOM_DEVICE_1;
-    if (strcmp(parameter, "MOBIFLIGHT_TEMPLATE2") == 0)
-        _customType = MY_CUSTOM_DEVICE_2;
+    if (strcmp(parameter, "Airspeed_Indicator") == 0)
+        _customType = AIRSPEED_INDICATOR_DEVICE;
 
-    if (_customType == MY_CUSTOM_DEVICE_1) {
+    if (_customType == AIRSPEED_INDICATOR_DEVICE) {
         /* **********************************************************************************
             Check if the device fits into the device buffer
         ********************************************************************************** */
-        if (!FitInMemory(sizeof(MyCustomClass))) {
+        if (!FitInMemory(sizeof(Airspeed_Indicator))) {
             // Error Message to Connector
             cmdMessenger.sendCmd(kStatus, F("Custom Device does not fit in Memory"));
             return;
@@ -140,69 +138,13 @@ void MFCustomDevice::attach(uint16_t adrPin, uint16_t adrType, uint16_t adrConfi
         ********************************************************************************** */
         // In most cases you need only one of the following functions
         // depending on if the constuctor takes the variables or a separate function is required
-        _mydevice = new (allocateMemory(sizeof(MyCustomClass))) MyCustomClass(_pin1, _pin2);
-        _mydevice->attach(Parameter1, Parameter2);
+        _myASI = new (allocateMemory(sizeof(Airspeed_Indicator))) Airspeed_Indicator(_pin1, _pin2);
+        _myASI->attach(Parameter1, Parameter2);
         // if your custom device does not need a separate begin() function, delete the following
         // or this function could be called from the custom constructor or attach() function
-        _mydevice->begin();
+        _myASI->begin();
         _initialized = true;
-    } else if (_customType == MY_CUSTOM_DEVICE_2) {
-        /* **********************************************************************************
-            Check if the device fits into the device buffer
-        ********************************************************************************** */
-        if (!FitInMemory(sizeof(MyCustomClass))) {
-            // Error Message to Connector
-            cmdMessenger.sendCmd(kStatus, F("Custom Device does not fit in Memory"));
-            return;
-        }
 
-        /* **********************************************************************************************
-            Read the pins from the EEPROM or Flash, copy them into a buffer
-            If you have set '"isI2C": true' in the device.json file, the first value is the I2C address
-        ********************************************************************************************** */
-        // getStringFromMem(adrPin, parameter, configFromFlash);
-        /* **********************************************************************************************
-            split the pins up into single pins, as the number of pins could be different between
-            multiple devices, it is done here
-        ********************************************************************************************** */
-        params = strtok_r(parameter, "|", &p);
-        _pin1  = atoi(params);
-        params = strtok_r(NULL, "|", &p);
-        _pin2  = atoi(params);
-        params = strtok_r(NULL, "|", &p);
-        _pin3  = atoi(params);
-
-        /* **********************************************************************************
-            Read the configuration from the EEPROM or Flash, copy it into a buffer.
-        ********************************************************************************** */
-        getStringFromMem(adrConfig, parameter, configFromFlash);
-        /* **********************************************************************************
-            split the config up into single parameter. As the number of parameters could be
-            different between multiple devices, it is done here.
-            This is just an example how to process the init string. Do NOT use
-            "," or ";" as delimiter for multiple parameters but e.g. "|"
-            For most customer devices it is not required.
-            In this case just delete the following
-        ********************************************************************************** */
-        uint16_t Parameter1;
-        char    *Parameter2;
-        params     = strtok_r(parameter, "|", &p);
-        Parameter1 = atoi(params);
-        params     = strtok_r(NULL, "|", &p);
-        Parameter2 = params;
-
-        /* **********************************************************************************
-            Next call the constructor of your custom device
-            adapt it to the needs of your constructor
-        ********************************************************************************** */
-        // In most cases you need only one of the following functions
-        // depending on if the constuctor takes the variables or a separate function is required
-        _mydevice = new (allocateMemory(sizeof(MyCustomClass))) MyCustomClass(_pin1, _pin2);
-        _mydevice->attach(Parameter1, Parameter2);
-        // if your custom device does not need a separate begin() function, delete the following
-        // or this function could be called from the custom constructor or attach() function
-        _mydevice->begin();
-        _initialized = true;
     } else {
         cmdMessenger.sendCmd(kStatus, F("Custom Device is not supported by this firmware version"));
     }
@@ -216,10 +158,8 @@ void MFCustomDevice::attach(uint16_t adrPin, uint16_t adrType, uint16_t adrConfi
 void MFCustomDevice::detach()
 {
     _initialized = false;
-    if (_customType == MY_CUSTOM_DEVICE_1) {
-        _mydevice->detach();
-    } else if (_customType == MY_CUSTOM_DEVICE_2) {
-        _mydevice->detach();
+    if (_customType == AIRSPEED_INDICATOR_DEVICE) {
+        _myASI->detach();
     }
 }
 
@@ -238,10 +178,8 @@ void MFCustomDevice::update()
     /* **********************************************************************************
         Do something if required
     ********************************************************************************** */
-    if (_customType == MY_CUSTOM_DEVICE_1) {
-        _mydevice->update();
-    } else if (_customType == MY_CUSTOM_DEVICE_2) {
-        _mydevice->update();
+    if (_customType == AIRSPEED_INDICATOR_DEVICE) {
+        _myASI->update();
     }
 }
 
@@ -254,9 +192,7 @@ void MFCustomDevice::set(int16_t messageID, char *setPoint)
 {
     if (!_initialized) return;
 
-    if (_customType == MY_CUSTOM_DEVICE_1) {
-        _mydevice->set(messageID, setPoint);
-    } else if (_customType == MY_CUSTOM_DEVICE_2) {
-        _mydevice->set(messageID, setPoint);
+    if (_customType == AIRSPEED_INDICATOR_DEVICE) {
+        _myASI->set(messageID, setPoint);
     }
 }

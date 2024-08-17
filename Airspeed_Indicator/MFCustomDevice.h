@@ -1,12 +1,11 @@
 #pragma once
 
 #include <Arduino.h>
-#include "MyCustomClass.h"
+#include "Airspeed_Indicator.h"
 
 // only one entry required if you have only one custom device
 enum {
-    MY_CUSTOM_DEVICE_1 = 1,
-    MY_CUSTOM_DEVICE_2
+   AIRSPEED_INDICATOR_DEVICE = 1
 };
 class MFCustomDevice
 {
@@ -20,7 +19,7 @@ public:
 private:
     bool           getStringFromMem(uint16_t addreeprom, char *buffer, bool configFromFlash);
     bool           _initialized = false;
-    MyCustomClass *_mydevice;
+    Airspeed_Indicator *_myASI;
     uint8_t        _pin1, _pin2, _pin3;
     uint8_t        _customType = 0;
 };

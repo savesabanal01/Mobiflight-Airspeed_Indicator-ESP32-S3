@@ -23,21 +23,20 @@
     "CanInstallFirmware": true,
     "CanResetBoard": true,
     "DelayAfterFirmwareUpdate": 0,
-    "FirmwareBaseName": "mobiflight_template_esp32s3",
+    "FirmwareBaseName": "Airspeed_Indicator_esp32s3",
     "FirmwareExtension": "bin",
-    "FriendlyName": "ESP32-S3 DevKitC1",
+    "FriendlyName": "Airspeed_Indicator ESP32-S3",
     "LatestFirmwareVersion": "2.5.1",
-    "MobiFlightType": "Mobiflight Template ESP32-S3 DevKitC1",
+    "MobiFlightType": "Airspeed_Indicator_ESP32-S3",
     "ResetFirmwareFile": "reset.raspberry_pico_flash_nuke.uf2",
     "CustomDeviceTypes": [
-      "MOBIFLIGHT_TEMPLATE",
-      "MOBIFLIGHT_TEMPLATE2"
+      "Airspeed_Indicator"
     ],
     "Community": {
-      "Project": "Your Project",
-      "Website": "https://YourWebsite.com",
-      "Docs": "https://YourWebsite.com",
-      "Support": "https://YourWebsite.com"
+      "Project": "Airpeed Indicator ESP32-S3",
+      "Website": "https://www.youtube.com/channel/UCFSyaCJK2cgowmSb3v3u2Ow",
+      "Docs": "https://discord.com/invite/U28QeEJpBV",
+      "Support": "https://discord.com/invite/U28QeEJpBV"
     }
   },
   "ModuleLimits": {
