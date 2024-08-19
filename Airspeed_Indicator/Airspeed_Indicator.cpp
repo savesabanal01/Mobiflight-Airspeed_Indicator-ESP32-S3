@@ -173,14 +173,14 @@ void Airspeed_Indicator::setAirspeed(float value)
 void Airspeed_Indicator::setInstrumentBrightnessRatio(float ratio)
 {
   instrumentBrightnessRatio = ratio;
-  instrumentBrightness = round(scaleValue(instrumentBrightnessRatio, 0.15, 1, 0, 255));
+  instrumentBrightness = round(scaleValue(instrumentBrightnessRatio, 0, 1, 0, 255));
 }
 
 void Airspeed_Indicator::setPowerSave(bool enabled)
 {
     if(enabled)
     {
-        digitalWrite(TFT_BL, LOW);
+        analogWrite(TFT_BL, 0);
         powerSaveFlag = true;
     }
     else
