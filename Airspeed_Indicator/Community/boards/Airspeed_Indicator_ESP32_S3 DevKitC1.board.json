@@ -26,7 +26,7 @@
     "FirmwareBaseName": "Airspeed_Indicator_esp32s3",
     "FirmwareExtension": "bin",
     "FriendlyName": "Airspeed_Indicator ESP32-S3",
-    "LatestFirmwareVersion": "2.5.1",
+    "LatestFirmwareVersion": "2.5.2",
     "MobiFlightType": "Airspeed_Indicator_ESP32-S3",
     "ResetFirmwareFile": "reset.raspberry_pico_flash_nuke.uf2",
     "CustomDeviceTypes": [

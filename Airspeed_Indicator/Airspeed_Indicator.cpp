@@ -97,16 +97,13 @@ void Airspeed_Indicator::set(int16_t messageID, char *setPoint)
         // tbd., get's called when PowerSavingMode is entered
         data = atoi(setPoint);
         setPowerSave((bool) atoi(setPoint));
-
+        break;
     case 0:
         setAirspeed(atof(setPoint));
         break;
     case 1:
         /* code */
         setInstrumentBrightnessRatio(atof(setPoint));
-        break;
-    case 2:
-        /* code */
         break;
     default:
         break;
@@ -164,6 +161,7 @@ void Airspeed_Indicator::drawASIGauge() // Draw the Airspeed Indicator Gauge and
 
     mainSpr.pushSprite(80, 0, TFT_BLACK);
     mainSpr.deleteSprite();
+    analogWrite(TFT_BL, instrumentBrightness);
 
 }
 
