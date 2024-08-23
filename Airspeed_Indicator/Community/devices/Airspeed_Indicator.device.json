@@ -30,7 +30,7 @@
       {
         "id": 100,
         "label": "Set Screen Rotation",
-        "description": "0 = Portrait, 1 = Landscape, 2 = Portrait (180), 3 = Landscape(180)"
+        "description": "1 = Normal, 3 = Rotate 180"
       }
     ]
   }

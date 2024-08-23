@@ -119,6 +119,7 @@ void Airspeed_Indicator::update()
     {
         if(prevScreenRotation != screenRotation)
         {
+            tft.fillScreen(TFT_BLACK);
             prevScreenRotation = screenRotation;
             tft.setRotation(screenRotation);
         }
@@ -192,7 +193,7 @@ void Airspeed_Indicator::setPowerSave(bool enabled)
 
 void Airspeed_Indicator::setScreenRotation(int rotation)
 {
-    if (rotation >= 0 && rotation <=3)
+    if (rotation == 1 || rotation == 3)
         screenRotation = rotation;
 }
 
