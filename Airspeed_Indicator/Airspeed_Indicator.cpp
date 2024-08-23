@@ -53,11 +53,7 @@ void Airspeed_Indicator::begin()
   tft.setSwapBytes(true);
   tft.pushImage(160, 80, 160, 160, logo);
   delay(3000);
-  tft.fillScreen(PANEL_COLOR);
-  tft.fillCircle(240, 160, 160, TFT_BLACK);
-
-  tft.setSwapBytes(true);
-  tft.pushImage(80, 0, 320, 320, instrument_bezel, TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
 
 }
 
@@ -105,6 +101,10 @@ void Airspeed_Indicator::set(int16_t messageID, char *setPoint)
         /* code */
         setInstrumentBrightnessRatio(atof(setPoint));
         break;
+    case 100:
+        /* code */
+        setScreenRotation(atoi(setPoint));
+        break;
     default:
         break;
     }
@@ -112,22 +112,22 @@ void Airspeed_Indicator::set(int16_t messageID, char *setPoint)
 
 void Airspeed_Indicator::update()
 {
-    float startTime;
-    float endTime;
 
-    startTime = millis();
     // Do something which is required regulary
-        // Do something which is required regulary
-    drawASIGauge();
-    // drawOtherInfo();
-
-  // Set the instrument light brightness if not in power saving mode
 
     if (!powerSaveFlag)
+    {
+        if(prevScreenRotation != screenRotation)
+        {
+            prevScreenRotation = screenRotation;
+            tft.setRotation(screenRotation);
+        }
+
+        drawASIGauge();
         analogWrite(TFT_BL, instrumentBrightness);
+    }
     else  
         digitalWrite(TFT_BL, LOW);
-    endTime = millis();
 
 
 
@@ -188,6 +188,12 @@ void Airspeed_Indicator::setPowerSave(bool enabled)
         analogWrite(TFT_BL, instrumentBrightness);
         powerSaveFlag = false;
     }
+}
+
+void Airspeed_Indicator::setScreenRotation(int rotation)
+{
+    if (rotation >= 0 && rotation <=3)
+        screenRotation = rotation;
 }
 
 float Airspeed_Indicator::scaleValue(float x, float in_min, float in_max, float out_min, float out_max)

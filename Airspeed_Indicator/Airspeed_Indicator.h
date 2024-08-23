@@ -20,6 +20,7 @@ private:
     void setInstrumentBrightnessRatio(float ratio);
     void setAirspeed(float value);
     void setPowerSave(bool enabled);
+    void setScreenRotation(int rotation);
 
     // Variables
     float startTime;
@@ -33,4 +34,6 @@ private:
     float ASIneedleRotation = 0; // angle of rotation of needle based on the Indicated AirSpeed
     float airSpeed = 0;
     bool powerSaveFlag;
+    int screenRotation = 3;
+    int prevScreenRotation = 3;
 };

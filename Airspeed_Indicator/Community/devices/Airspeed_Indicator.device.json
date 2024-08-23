@@ -26,6 +26,12 @@
         "label": "Show Instrument Brightness",
         "description": "$ will be displayed as Instrument Brightnessvalue"
       }
+      ,
+      {
+        "id": 100,
+        "label": "Set Screen Rotation",
+        "description": "0 = Portrait, 1 = Landscape, 2 = Portrait (180), 3 = Landscape(180)"
+      }
     ]
   }
   
