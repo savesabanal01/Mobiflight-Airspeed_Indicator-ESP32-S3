@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MobiflightConnector>
+  <outputs>
+    <config guid="ad4bb8fb-5049-4427-81af-29756e02980f">
+      <active>true</active>
+      <description>Airspeed</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="XplaneDataRef" path="sim/cockpit2/gauges/indicators/airspeed_kts_pilot" />
+        <test type="Float" value="1" />
+        <modifiers />
+        <display type="CustomDevice" serial="Airspeed Indicator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Airspeed Indicator ESP32-S3" messageType="0" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+    <config guid="9dd24cd3-d219-4afe-a935-666cdaf06482">
+      <active>true</active>
+      <description>Instrument Brightness</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="XplaneDataRef" path="sim/cockpit2/electrical/instrument_brightness_ratio_manual[1]" />
+        <test type="Float" value="1" />
+        <modifiers />
+        <display type="CustomDevice" serial="Airspeed Indicator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Airspeed Indicator ESP32-S3" messageType="1" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+    <config guid="c250ef5d-dffb-46b0-aa30-230c847b5f64">
+      <active>true</active>
+      <description>Screen Orientation</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="Variable" varType="number" varName="ScreenOrientation" varExpression="$" />
+        <test type="Float" value="1" />
+        <modifiers>
+          <transformation active="True" expression="3" />
+        </modifiers>
+        <display type="CustomDevice" serial="Airspeed Indicator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Airspeed Indicator ESP32-S3" messageType="100" value="3" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+  </outputs>
+  <inputs />
+</MobiflightConnector>
