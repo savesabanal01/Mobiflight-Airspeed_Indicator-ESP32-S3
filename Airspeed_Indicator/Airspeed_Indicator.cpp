@@ -115,21 +115,29 @@ void Airspeed_Indicator::update()
 
     // Do something which is required regulary
 
-    if (!powerSaveFlag)
+    // if (!powerSaveFlag)
+    // {
+    //     if(prevScreenRotation != screenRotation)
+    //     {
+    //         tft.fillScreen(TFT_BLACK);
+    //         prevScreenRotation = screenRotation;
+    //         tft.setRotation(screenRotation);
+    //     }
+
+    //     drawASIGauge();
+    //     analogWrite(TFT_BL, instrumentBrightness);
+    // }
+    // else  
+    //     digitalWrite(TFT_BL, LOW);
+    analogWrite(TFT_BL, instrumentBrightness);
+    if(prevScreenRotation != screenRotation)
     {
-        if(prevScreenRotation != screenRotation)
-        {
-            tft.fillScreen(TFT_BLACK);
-            prevScreenRotation = screenRotation;
-            tft.setRotation(screenRotation);
-        }
-
-        drawASIGauge();
-        analogWrite(TFT_BL, instrumentBrightness);
+        tft.fillScreen(TFT_BLACK);
+        prevScreenRotation = screenRotation;
+        tft.setRotation(screenRotation);
     }
-    else  
-        digitalWrite(TFT_BL, LOW);
 
+    drawASIGauge();
 
 
 }
