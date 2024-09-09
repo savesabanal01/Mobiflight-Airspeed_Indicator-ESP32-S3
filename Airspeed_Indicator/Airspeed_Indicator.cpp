@@ -214,7 +214,7 @@ void Airspeed_Indicator::setPowerSave(bool enabled)
 
 void Airspeed_Indicator::setScreenRotation(int rotation)
 {
-    if (rotation >= 0 || rotation <= 3)
+    if (rotation >= 0 && rotation <= 3)
         screenRotation = rotation;
 }
 
