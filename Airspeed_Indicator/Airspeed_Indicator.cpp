@@ -49,7 +49,7 @@ void Airspeed_Indicator::begin()
   tft.begin();
   tft.setRotation(3);
   tft.fillScreen(PANEL_COLOR);
-  tft.setPivot(320, 160);
+//   tft.setPivot(320, 160);
   tft.setSwapBytes(true);
   tft.pushImage(160, 80, 160, 160, logo);
   delay(3000);
@@ -90,7 +90,7 @@ void Airspeed_Indicator::set(int16_t messageID, char *setPoint)
         // tbd., get's called when Mobiflight shuts down
         setPowerSave(true);
     case -2:
-        // tbd., get's called when PowerSavingMode is entered
+        // // tbd., get's called when PowerSavingMode is entered
         data = atoi(setPoint);
         setPowerSave((bool) atoi(setPoint));
         break;
@@ -137,8 +137,16 @@ void Airspeed_Indicator::update()
         tft.setRotation(screenRotation);
     }
 
-    drawASIGauge();
-
+    if (screenRotation == 1 || screenRotation == 3)
+    {
+        tft.setViewport(80, 0, 320, 320, false);
+        drawASIGauge();
+    }
+    else if (screenRotation == 0 || screenRotation == 2)
+    {
+        tft.setViewport(0, 80, 320, 320);
+        drawASIGauge();
+    }
 
 }
 
@@ -168,7 +176,11 @@ void Airspeed_Indicator::drawASIGauge() // Draw the Airspeed Indicator Gauge and
     ASIneedleSpr.setSwapBytes(true);
     ASIneedleSpr.deleteSprite();
 
-    mainSpr.pushSprite(80, 0, TFT_BLACK);
+    if (screenRotation == 1 || screenRotation == 3)
+        mainSpr.pushSprite(80, 0, TFT_BLACK);
+    else if (screenRotation == 0 || screenRotation == 2)
+        mainSpr.pushSprite(0, 0, TFT_BLACK);
+
     mainSpr.deleteSprite();
     analogWrite(TFT_BL, instrumentBrightness);
 
@@ -189,7 +201,8 @@ void Airspeed_Indicator::setPowerSave(bool enabled)
 {
     if(enabled)
     {
-        analogWrite(TFT_BL, 0);
+        digitalWrite(TFT_BL, LOW);
+        tft.fillScreen(TFT_BLACK);
         powerSaveFlag = true;
     }
     else
@@ -201,7 +214,7 @@ void Airspeed_Indicator::setPowerSave(bool enabled)
 
 void Airspeed_Indicator::setScreenRotation(int rotation)
 {
-    if (rotation == 1 || rotation == 3)
+    if (rotation >= 0 || rotation <= 3)
         screenRotation = rotation;
 }
 
